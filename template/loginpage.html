@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style/loginpage.css' %}">
+</head>
+<body>
+    <div class="main">
+      <h1 class="text12">LOGIN</h1>
+      <h2 class="text13">________________________________</h2>
+        <div class="block">
+          <form action="{% url 'login' %}" method="post">
+            {% csrf_token   %}
+        <label style="color: aliceblue;" for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+  
+        <label style="color: aliceblue;" for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+  
+        <button type="submit">Login</button>
+      
+        <label >
+          <input type="checkbox" checked="checked" name ="remember"> Remember me
+        </label>
+      </form>
+       
+        <div class="container">
+            <a href="{% url 'registration' %}"  style="text-decoration:none; color:white; "class="cancelbtn">Cancel</a>
+            <span style="color: aliceblue;" class="psw">Forgot <a style="color: aliceblue;" href="#">password?</a></span>
+      
+          </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
