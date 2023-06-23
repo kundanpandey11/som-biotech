@@ -1,0 +1,39 @@
+.topNav {
+  float: right;
+  min-width: 200px;
+}
+
+.topNav input[type='text'] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.topNav button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.topNav button:hover {
+  background-color: #ccc;
+}
+
+.container ul {
+  list-style-type: none;
+}
+
+.searchBox {
+  float: right;
+  position: relative;
+  left: 220px;
+  top: 110px;
+}

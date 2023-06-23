@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %} -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="{% static 'style/loginpage.css' %}">
+  <link rel="stylesheet" href="./loginpage.css">
 
 </head>
 
@@ -19,25 +19,23 @@
         <br><br>
         <div>
           <form action="{% url 'login' %}" method="post">
-
-            {% csrf_token %}
+            <!-- {% csrf_token %} -->
             <label style="color: aliceblue;" for="uname"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="username" required>
 
             <label style="color: aliceblue;" for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
-            <label>
-              <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
 
             <button type="submit">Login</button>
 
-            
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
           </form>
 
           <div class="container">
-            <a href="{% url 'registration' %}" style="text-decoration:none; color:white; " class="cancelbtn">Sign Up</a>
-            <span style="color: aliceblue;" class="psw"> <a style="color: aliceblue;" href="{% url 'password_reset' %}">Forgot
+            <a href="{% url 'registration' %}" style="text-decoration:none; color:white; " class="cancelbtn">Cancel</a>
+            <span style="color: aliceblue;" class="psw"> <a style="color: aliceblue;" href="enterEmail.html">Forgot
                 password?</a></span>
 
           </div>

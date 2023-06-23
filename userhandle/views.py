@@ -5,15 +5,26 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib import messages 
 
+from Bio import Entrez, SeqIO
+from Bio.SeqFeature import SeqFeature, FeatureLocation
+from .utils import genbank_search
+
+
+# Set the email address for the Entrez API
+
+
 def testpage(request):
     return HttpResponse("this is connected and working !")
     
 
 def index(request):
-    context = {
-        "title": "BioTech"          
-    }
-    return render(request, "index.html", context)
+    if request.user.is_authenticated:
+        context = {
+            "title": "BioTech"          
+        }
+        return render(request, "dashboard.html", context)
+    else:
+        return render(request, "mainpagefront.html")
 
 
 def user_login(request):
@@ -55,3 +66,25 @@ def user_register(request):
 def user_logout(request):
     logout(request)
     return redirect("login")
+
+
+def about(request):
+    template = "aboutUs.html"
+    return render(request, template)
+
+def contact(request):
+    template = "contactUs.html"
+    return render(request, template)
+
+
+def genbank(request):
+    if request.method == "POST":
+        query = request.POST['gene']
+        print(query)
+        data = genbank_search(query=query)
+        return render(request, "genbank.html", {'data': data})
+    else:
+        return render(request, "genbank.html")
+    
+
+

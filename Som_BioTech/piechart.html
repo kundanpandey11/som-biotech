@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url(https://images.unsplash.com/photo-1638184984605-af1f05249a56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-y: hidden
+        }
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 0px;
+        }
+
+        .sidebar {
+            left: 0;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            height: 100%;
+        }
+
+        .graphs {
+            left: 0;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            /* border-style: solid; */
+            /* height: 50%; */
+            background-color: black;
+            position: relative;
+            top: 12%;
+        }
+
+        .info {
+            left: 0;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            height: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .sidebarMenu {
+                display: none;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .sidebarMenu1 {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="#">SOM BioTech</a>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+
+            </div>
+        </nav>
+        <hr>
+        <div class="container-fluid mt-2 me-2">
+            <div class="row vh-100">
+                <div class="sidear col-2">
+                    <div class="sidebarMenu">
+                        <p>
+                            <button class="btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                                style="border-color: gray; border-width: 2px; ">
+                                <i class="fa fa-bars" aria-hidden="true" style="color: white"></i>
+
+                            </button>
+                        </p>
+                        <div class="collapse show" id="collapseExample">
+                            <div class="card card-body vh-100 text-white bg-transparent">
+                                <ul style="list-style-type: none;">
+                                    <li>Link 1</li>
+                                    <li>Link 1</li>
+                                    <li>Link 1</li>
+                                    <li>Link 1</li>
+                                    <li>Link 1</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebarMenu1">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling" aria-expanded="false" aria-controls="collapseExample"
+                            style="border-color: gray; border-width: 2px; ">
+                            <i class="fa fa-bars" aria-hidden="true" style="color: white"></i>
+
+                        </button>
+                        <div class="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false"
+                            tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel"
+                            style="width: 35%;">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <p>Try scrolling the rest of the page to see this option in action.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="graphs col-4 text-white me-2 d-flex justify-content-center">
+                    <canvas id="myChart" style="width:100%;max-width:500px; max-height: 100%;"></canvas>
+                </div>
+                <div class="info col-5 text-white">
+                    <div class="col-12">
+                        <div class="container-fluid d-flex justify-content-end mb-4 " style="float: right;">
+                            <div class="row">
+                                <textarea class="col" style="width: 100%; border-radius: 5px;"></textarea>
+                                <div class="col-4">
+                                    <button class="btn btn-outline-light" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2>Description</h2>
+                        <p>Navbars can use .navbar-toggler, .navbar-collapse, and
+                            .navbar-expand{-sm|-md|-lg|-xl|-xxl}
+                            classes to determine when their content collapses behind a button. In combination with
+                            other
+                            utilities, you can easily choose when to show or hide particular elements.
+
+                            For navbars that never collapse, add the .navbar-expand class on the navbar. For navbars
+                            that
+                            always collapse, don’t add any .navbar-expand class.
+
+                            Toggler
+                            Navbar togglers are left-aligned by default, but should they follow a sibling element
+                            like a
+                            .navbar-brand, they’ll automatically be aligned to the far right. Reversing your markup
+                            will
+                            reverse the placement of the toggler. Below are examples of different toggle styles.
+
+                            With no .navbar-brand shown at the smallest breakpoint:</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+        var yValues = [55, 49, 44, 24, 15];
+        var barColors = [
+            "#b91d47",
+            "#00aba9",
+            "#2b5797",
+            "#e8c3b9",
+            "#1e7145"
+        ];
+
+        new Chart("myChart", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "World Wide Wine Production 2018",
+                    fontSize: 20
+                }
+            }
+        });
+    </script>
+
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

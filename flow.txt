@@ -1,0 +1,7 @@
+to be done tomorrow and finalize the project 
+
+
+- add ugene to a next page analysis 
+- check if binding can be integrated else take in analysis against hiv 
+- complete the logic to splice ai in django and leave testing for now 
+- 
