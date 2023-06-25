@@ -1,0 +1,74 @@
+{% extends "bargraph/dashboard.html"%}
+                {% block body %}
+                <div class="graphs col-4 text-white me-2">
+                    <canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
+                </div>
+                <div class="info col-5 text-white">
+                    <div class="col-12">
+                        <div class="container-fluid d-flex justify-content-end mb-5" style="float: right;">
+                            <div class="row">
+                                <form action="{% url 'deepchem_qsar' %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="col" style="width: 100%; border-radius: 5px;" class="form-control" 
+                                    placeholder="Smiles" name="smiles" value="{{smiles}}" />
+                                    <!-- <div class="col-4"> -->
+                                        <button class="btn btn-outline-light" type="submit">Search</button>
+                                    <!-- </div> -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2>Description</h2>
+                        <p>Navbars can use .navbar-toggler, .navbar-collapse, and
+                            .navbar-expand{-sm|-md|-lg|-xl|-xxl}
+                            classes to determine when their content collapses behind a button. In combination with
+                            other
+                            utilities, you can easily choose when to show or hide particular elements.
+                            <p>Solubilty: {{sol}}</p>
+                            <p>Toxicity Nature: {{tox}}</p>
+                            {% if toxicity_label == "Toxic" %}
+                            <p >The molecule {{smiles}} is <span style="color: red;">{{toxicity_label}}</span></p>
+                            {% else %} 
+                            <p >The molecule {{smiles}} is <span style="color: green;">{{toxicity_label}}</span></p>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var xValues = ["Solubilty", "Toxicity", ];
+        var yValues = ['{{sol}}', '{{tox}}',];
+        var barColors = [ "green", "blue", "brown"];
+
+        new Chart("myChart", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Prediction on smiles",
+                    fontSize: 20
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(window).on('load', function () {
+            $('.preloader').fadeOut('slow');
+        });
+    </script>
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+    {% endblock %}

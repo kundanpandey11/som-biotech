@@ -1,46 +1,27 @@
-"""
-Script that trains graph-conv models on Tox21 dataset.
-"""
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
 
-import numpy as np
-
-np.random.seed(123)
-import tensorflow as tf
-
-tf.random.set_seed(123)
 import deepchem as dc
-from deepchem.molnet import load_tox21
-from deepchem.models.graph_models import GraphConvModel
 
-model_dir = "Model_toxicity"
 
-# Load Tox21 dataset
-tox21_tasks, tox21_datasets, transformers = load_tox21(featurizer='GraphConv')
-train_dataset, valid_dataset, test_dataset = tox21_datasets
-print(train_dataset.data_dir)
-print(valid_dataset.data_dir)
 
-# Fit models
-metric = dc.metrics.Metric(
-    dc.metrics.roc_auc_score, np.mean, mode="classification")
+def predict_tox(smiles):
+    model = dc.models.GraphConvModel(n_tasks=12, mode='regression', model_dir="Model_toxicity")
+    featurizer = dc.feat.ConvMolFeaturizer()
+    smiles_X = featurizer.featurize([smiles])
+    predicted_toxicity = model.predict_on_batch(smiles_X)
+    print('Predicted Solubility:', predicted_toxicity)
+    toxicity_label = "Toxic" if predicted_toxicity[0] >= 0.5 else "Non-toxic"
+    print(toxicity_label)
+    return predicted_toxicity[0][0]
 
-# Batch size of models
-batch_size = 50
 
-model = GraphConvModel(
-    len(tox21_tasks), batch_size=batch_size, mode='classification', model_dir=model_dir )
+def predict_tox(smiles):
+    model = dc.models.GraphConvModel(n_tasks=12, mode='classification', model_dir="Troxicity_model")
+    featurizer = dc.feat.ConvMolFeaturizer()
+    smiles_X = featurizer.featurize([smiles])
+    predicted_toxicity = model.predict_on_batch(smiles_X)
+    print('Predicted toxicity:', predicted_toxicity[0][0][0])
+    return predicted_toxicity[0][0]
 
-model.fit(train_dataset, nb_epoch=10)
+# model.restore()
+# create_model()
 
-print("Evaluating model")
-train_scores = model.evaluate(train_dataset, [metric], transformers)
-valid_scores = model.evaluate(valid_dataset, [metric], transformers)
-
-print("Train scores")
-print(train_scores)
-
-print("Validation scores")
-print(valid_scores)

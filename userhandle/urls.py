@@ -11,11 +11,17 @@ urlpatterns  = [
     path("about", views.about, name="about"), 
     path("contact", views.contact, name="contact"),
     
+    # dashboard
+    path("predict-weight", dashboard.rdkit_predict_mw, name="rdkit_predict_mw"),
+    path("predict-hydrogen-bonds", dashboard.rdkit_predict_hydrogen, name="rdkit_predict_hydrogen"),
+    path("predict-qsar", dashboard.deepchem_qsar, name="deepchem_qsar"),
+    path("splicing", dashboard.splicing, name="splicing"),
+
     # genbank 
     path("genbank", views.genbank, name="genbank"),
 
     # deepchem
-    path("Solubility_prediction", dashboard.solubility_prediction, name='solubility-prediction'),
+    # path("Solubility_prediction", dashboard.solubility_prediction, name='solubility-prediction'),
 
     # forgot password 
     path(

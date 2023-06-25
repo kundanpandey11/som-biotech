@@ -22,7 +22,7 @@ def index(request):
         context = {
             "title": "BioTech"          
         }
-        return render(request, "dashboard.html", context)
+        return render(request, "bargraph/rdkit_mol_wgt.html", context)
     else:
         return render(request, "mainpagefront.html")
 
@@ -80,11 +80,14 @@ def contact(request):
 def genbank(request):
     if request.method == "POST":
         query = request.POST['gene']
-        print(query)
+        request.session['genbank_query'] = query
+        # print(query)
         data = genbank_search(query=query)
         return render(request, "genbank.html", {'data': data})
     else:
-        return render(request, "genbank.html")
+        query = request.session['genbank_query']
+        data = genbank_search(query=query)
+        return render(request, "genbank.html", {"data":data})
     
 
 

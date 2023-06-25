@@ -117,17 +117,25 @@
         <div class="topNav col-6">
             <form action="{% url 'genbank' %}" method="post">
                 {% csrf_token %}
-            <input type="text" placeholder="Search..." name="gene">
+            <input type="text" placeholder="Search..." name="gene" required>
             <button type="submit" name="search"><i class="fa fa-search"></i></button>
-        </form>
+            </form>
         </div>
-        <div class="searchBox">
-            <Textarea style="max-width: 200px; max-height: 200px; "></Textarea><br>
-            <button type="submit" style="float: right;" class="Searchbtn">Search</button>
-        </div>
+        
+            <form action="{% url 'genbank' %}" method="post">
+                {% csrf_token %}
+                <div class="searchBox">
+                <Textarea style="max-width: 200px; max-height: 200px; min-height:50px; " name="gene" 
+                placeholder="Search with genbank syntax" required></Textarea><br>
+                <button type="submit" style="float: right;" class="Searchbtn">Search</button>
+            </div>
+            </form>
+            
+            
+        
         <div class="container col-6">
             <div class="title">
-                <h1>List of Chemicals</h1>
+                <h1>GENBANK</h1>
             </div>
             <div class="container1">
                 {% for d in data %}

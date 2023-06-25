@@ -1,0 +1,75 @@
+
+{% extends "bargraph/dashboard.html"%}
+                {% block body %}
+                <div class="graphs col-4 text-white me-2">
+                    <canvas id="myChart" style="width:100%;max-width:600px;"></canvas>
+                </div>
+                <div class="info col-5 text-white">
+                    <div class="col-12">
+                        <div class="container-fluid d-flex justify-content-end mb-5" style="float: right;">
+                            <div class="row">
+                                <form action="{% url 'rdkit_predict_hydrogen' %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="col" style="width: 100%; border-radius: 5px;" class="form-control" 
+                                    placeholder="Smiles" name="smiles" value="{{smiles}}" />
+                                    <!-- <div class="col-4"> -->
+                                        <button class="btn btn-outline-light" type="submit">Search</button>
+                                    <!-- </div> -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h2>Description</h2>
+                        <p>
+                            In the subsequent phase of our project, we are extending our predictions to include the 
+                            number of hydrogen bond acceptors, the number of hydrogen bond donors, and the count of 
+                            rotatable bonds. These additional molecular properties provide valuable insights into a 
+                            compound's interactions with other molecules and its structural flexibility. By incorporating 
+                            these predictions into our deep learning model, trained on SMILES representations and corresponding 
+                            property data, we aim to enhance our understanding of the molecular characteristics of novel 
+                            compounds. This expanded knowledge will assist in optimizing drug design and discovery processes, 
+                            ultimately leading to the identification of more effective and efficient pharmaceutical candidates.
+                            <p>Number of Hydrogen Bond Acceptors: {{HBA}}</p>
+                            <p>Number of Hydrogen Bond Donors: {{HBD}}</p>
+                            <p>Number of Rotatable Bonds: {{RB}}</p>
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var xValues = ["HBA", "HBD", "Rotatable Bonds"];
+        var yValues = ['{{HBA}}', '{{HBD}}','{{RB}}',];
+        var barColors = [ "green", "blue", "brown"];
+
+        new Chart("myChart", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Prediction on smiles",
+                    fontSize: 20
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(window).on('load', function () {
+            $('.preloader').fadeOut('slow');
+        });
+    </script>
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+    {% endblock %}
